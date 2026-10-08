@@ -1,0 +1,23 @@
+[Unit]
+Description=Crypto Signal Bot (read-only and paper trading)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=%h/crypto-signal-bot
+ExecStart=%h/crypto-signal-bot/.venv/bin/python %h/crypto-signal-bot/scripts/run_telegram.py
+EnvironmentFile=%h/crypto-signal-bot/.env
+Restart=on-failure
+RestartSec=10
+TimeoutStopSec=45
+KillSignal=SIGTERM
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ReadWritePaths=%h/crypto-signal-bot/.runtime %h/crypto-signal-bot
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=default.target
